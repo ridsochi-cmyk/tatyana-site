@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Спасибо — Рид Татьяна</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #06070b;
+      --text: #f7f8fc;
+      --muted: #adb5c3;
+      --gold: #e7c796;
+      --gold-2: #cda56a;
+      --stroke: rgba(255,255,255,0.08);
+      --card: rgba(255,255,255,0.05);
+      --shadow: 0 30px 80px rgba(0,0,0,0.45);
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+
+    body {
+      margin: 0;
+      font-family: 'Inter', system-ui, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 20% 10%, rgba(231,199,150,0.08), transparent 25%),
+        radial-gradient(circle at 80% 10%, rgba(255,255,255,0.05), transparent 20%),
+        var(--bg);
+      display: grid;
+      place-items: center;
+      padding: 24px;
+    }
+
+    .card {
+      width: min(760px, 100%);
+      background: linear-gradient(180deg, rgba(255,255,255,0.07), var(--card));
+      border: 1px solid var(--stroke);
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+      padding: 42px 34px;
+      text-align: center;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 16px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: #d8dde6;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--gold);
+      box-shadow: 0 0 16px var(--gold);
+    }
+
+    h1 {
+      margin: 0 0 16px;
+      font-size: clamp(34px, 6vw, 60px);
+      line-height: 1;
+      letter-spacing: -0.05em;
+    }
+
+    p {
+      margin: 0 auto 14px;
+      max-width: 620px;
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.6;
+    }
+
+    .name {
+      color: var(--gold);
+      font-weight: 800;
+      margin-bottom: 18px;
+      font-size: 18px;
+    }
+
+    .actions {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 28px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 14px 22px;
+      border-radius: 999px;
+      text-decoration: none;
+      font-weight: 800;
+      transition: 0.25s ease;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--gold), var(--gold-2));
+      color: #0a0804;
+      box-shadow: 0 20px 42px rgba(231,199,150,0.2);
+    }
+
+    .btn-secondary {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: var(--text);
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .hint {
+      margin-top: 26px;
+      font-size: 14px;
+      color: #c7ced9;
+      opacity: 0.9;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="badge"><span class="dot"></span> Запрос принят</div>
+
+    <div class="name">Рид Татьяна</div>
+
+    <h1>Спасибо за интерес.</h1>
+
+    <p>
+      Ваш запрос на личный разбор принят. Запись на стратегическую встречу, Telegram, WhatsApp или форму.
+    </p>
+
+    <div class="actions">
+      <a class="btn btn-primary" href="./index.html">Вернуться на сайт</a>
+      <a class="btn btn-secondary" href="mailto:director@company.com">Написать на e-mail</a>
+    </div>
+
+    </div>
+  </div>
+</body>
+</html>

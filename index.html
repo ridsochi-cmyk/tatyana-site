@@ -1,0 +1,1111 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Рид Татьяна — система контроля бизнеса</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #06070b;
+      --bg-soft: #0d1018;
+      --card: rgba(255,255,255,0.045);
+      --card-strong: rgba(255,255,255,0.07);
+      --stroke: rgba(255,255,255,0.09);
+      --text: #f7f8fc;
+      --muted: #adb5c3;
+      --gold: #e7c796;
+      --gold-2: #cda56a;
+      --gold-soft: rgba(231,199,150,0.16);
+      --shadow: 0 30px 80px rgba(0,0,0,0.45);
+      --radius: 28px;
+      --max: 1180px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: 'Inter', system-ui, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 15% 10%, rgba(231,199,150,0.08), transparent 24%),
+        radial-gradient(circle at 80% 8%, rgba(255,255,255,0.05), transparent 20%),
+        radial-gradient(circle at 50% 70%, rgba(231,199,150,0.06), transparent 26%),
+        var(--bg);
+      overflow-x: hidden;
+    }
+
+    .bg-orb {
+      position: fixed;
+      width: 520px;
+      height: 520px;
+      border-radius: 50%;
+      filter: blur(90px);
+      background: rgba(231,199,150,0.07);
+      pointer-events: none;
+      z-index: 0;
+      transform: translate(-50%, -50%);
+      transition: transform 0.18s linear;
+    }
+
+    .container {
+      width: min(var(--max), calc(100% - 32px));
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(16px);
+      background: rgba(6,7,11,0.6);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .topbar-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      padding: 16px 0;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-mark {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, var(--gold), var(--gold-2));
+      box-shadow: 0 12px 30px rgba(231,199,150,0.22);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .brand-mark::after {
+      content: '';
+      position: absolute;
+      inset: 9px;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.16);
+      background: rgba(0,0,0,0.35);
+    }
+
+    .brand-title {
+      font-weight: 800;
+      letter-spacing: 0.03em;
+    }
+
+    .brand-sub {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 600;
+      margin-top: 2px;
+      max-width: 240px;
+      line-height: 1.35;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .nav a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 14px;
+      transition: 0.2s ease;
+    }
+
+    .nav a:hover { color: var(--text); }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 14px 22px;
+      border-radius: 999px;
+      text-decoration: none;
+      font-weight: 800;
+      transition: 0.25s ease;
+      cursor: pointer;
+      border: 1px solid transparent;
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      color: #0a0804;
+      background: linear-gradient(135deg, var(--gold), var(--gold-2));
+      box-shadow: 0 20px 42px rgba(231,199,150,0.2);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 24px 50px rgba(231,199,150,0.25);
+    }
+
+    .btn-secondary {
+      color: var(--text);
+      background: rgba(255,255,255,0.03);
+      border-color: rgba(255,255,255,0.08);
+    }
+
+    .btn-secondary:hover {
+      transform: translateY(-2px);
+      background: rgba(255,255,255,0.055);
+    }
+
+    .hero {
+      padding: 76px 0 30px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 28px;
+      align-items: stretch;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.03);
+      color: #d6dbe4;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 22px;
+    }
+
+    .eyebrow-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--gold);
+      box-shadow: 0 0 16px var(--gold);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%,100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.35); opacity: 0.72; }
+    }
+
+    h1 {
+      font-size: clamp(42px, 8vw, 84px);
+      line-height: 0.95;
+      letter-spacing: -0.055em;
+      margin: 0 0 20px;
+      max-width: 780px;
+    }
+
+    .lead {
+      color: #c4cbd7;
+      font-size: clamp(17px, 2vw, 21px);
+      max-width: 640px;
+      margin: 0 0 28px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 28px;
+    }
+
+    .proofline {
+      display: flex;
+      gap: 22px;
+      flex-wrap: wrap;
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .proofline span::before {
+      content: '•';
+      color: var(--gold);
+      margin-right: 8px;
+    }
+
+    .panel {
+      border-radius: var(--radius);
+      border: 1px solid var(--stroke);
+      background: linear-gradient(180deg, var(--card-strong), var(--card));
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-card {
+      padding: 22px;
+    }
+
+    .hero-card::before,
+    .stat-card::before,
+    .feature::before,
+    .case-card::before,
+    .cta-box::before {
+      content: '';
+      position: absolute;
+      inset: -1px;
+      background: linear-gradient(135deg, rgba(231,199,150,0.18), transparent 25%, transparent 75%, rgba(255,255,255,0.06));
+      pointer-events: none;
+      opacity: 0.7;
+    }
+
+    .monitor {
+      border-radius: 24px;
+      padding: 18px;
+      background: rgba(4,6,10,0.74);
+      border: 1px solid rgba(255,255,255,0.08);
+      min-height: 100%;
+    }
+
+    .monitor-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .monitor-title {
+      font-weight: 800;
+      letter-spacing: -0.03em;
+    }
+
+    .live {
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: var(--gold-soft);
+      color: var(--gold);
+      font-size: 12px;
+      font-weight: 800;
+      border: 1px solid rgba(231,199,150,0.18);
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .mini-card {
+      border-radius: 18px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      padding: 16px;
+    }
+
+    .label {
+      color: var(--muted);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 10px;
+    }
+
+    .num {
+      font-weight: 900;
+      letter-spacing: -0.05em;
+      font-size: 34px;
+      margin-bottom: 6px;
+    }
+
+    .gold { color: var(--gold); }
+
+    .small-note {
+      font-size: 14px;
+      color: #cfd5de;
+    }
+
+    .chart-box {
+      margin-top: 14px;
+      border-radius: 20px;
+      padding: 18px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .chart-svg {
+      width: 100%;
+      height: 170px;
+      overflow: visible;
+      display: block;
+    }
+
+    .chart-path {
+      fill: none;
+      stroke: var(--gold);
+      stroke-width: 3.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      filter: drop-shadow(0 0 10px rgba(231,199,150,0.22));
+      stroke-dasharray: 1000;
+      stroke-dashoffset: 1000;
+      animation: drawLine 3s ease forwards 0.4s;
+    }
+
+    .chart-area {
+      fill: url(#areaFill);
+      opacity: 0;
+      animation: fadeArea 2s ease forwards 1s;
+    }
+
+    .chart-dot {
+      fill: var(--gold);
+      opacity: 0;
+      transform-origin: center;
+      animation: popDot 0.5s ease forwards;
+    }
+
+    @keyframes drawLine { to { stroke-dashoffset: 0; } }
+    @keyframes fadeArea { to { opacity: 1; } }
+    @keyframes popDot {
+      from { opacity: 0; transform: scale(0.2); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .alerts {
+      display: grid;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .alert {
+      display: flex;
+      gap: 12px;
+      align-items: start;
+      padding: 12px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+      transition: 0.25s ease;
+      cursor: pointer;
+    }
+
+    .alert:hover {
+      transform: translateY(-2px);
+      background: rgba(255,255,255,0.05);
+    }
+
+    .alert-index {
+      width: 34px;
+      height: 34px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      background: var(--gold-soft);
+      border: 1px solid rgba(231,199,150,0.18);
+      color: var(--gold);
+      font-weight: 900;
+      flex: 0 0 auto;
+    }
+
+    .alert-detail {
+      margin-top: 10px;
+      color: #d9dee7;
+      font-size: 14px;
+      display: block;
+    }
+
+    section { padding: 38px 0; }
+
+    .section-head {
+      max-width: 760px;
+      margin-bottom: 26px;
+    }
+
+    h2 {
+      margin: 0 0 14px;
+      font-size: clamp(30px, 4vw, 50px);
+      line-height: 1;
+      letter-spacing: -0.045em;
+    }
+
+    .section-head p {
+      color: var(--muted);
+      margin: 0;
+      font-size: 18px;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+
+    .stat-card,
+    .feature,
+    .case-card,
+    .quote-card,
+    .process-card,
+    .cta-box {
+      padding: 24px;
+    }
+
+    .stat-number {
+      font-size: clamp(36px, 5vw, 56px);
+      font-weight: 900;
+      letter-spacing: -0.05em;
+      margin-bottom: 8px;
+    }
+
+    .stat-desc,
+    .feature p,
+    .case-card p,
+    .quote-card p,
+    .process-text,
+    .cta-box p {
+      color: var(--muted);
+      font-size: 15px;
+      margin: 0;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .feature {
+      min-height: 280px;
+      transition: transform 0.25s ease, background 0.25s ease;
+    }
+
+    .feature:hover,
+    .case-card:hover,
+    .stat-card:hover {
+      transform: translateY(-5px);
+      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.04));
+    }
+
+    .feature-id {
+      color: rgba(255,255,255,0.18);
+      font-weight: 900;
+      font-size: 54px;
+      line-height: 1;
+      margin-bottom: 18px;
+    }
+
+    .feature h3,
+    .case-card h3 {
+      margin: 0 0 12px;
+      font-size: 24px;
+      letter-spacing: -0.03em;
+    }
+
+    .feature ul,
+    .case-list {
+      margin: 16px 0 0;
+      padding-left: 18px;
+      color: #d7dde7;
+    }
+
+    .feature li,
+    .case-list li { margin-bottom: 8px; }
+
+    .split {
+      display: grid;
+      grid-template-columns: 0.95fr 1.05fr;
+      gap: 20px;
+    }
+
+    .quote-card {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 100%;
+      background: linear-gradient(180deg, rgba(231,199,150,0.12), rgba(255,255,255,0.03));
+    }
+
+    .quote-card blockquote {
+      margin: 0;
+      font-size: clamp(25px, 3vw, 40px);
+      line-height: 1.08;
+      letter-spacing: -0.045em;
+      max-width: 540px;
+    }
+
+    .badge-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 18px;
+    }
+
+    .badge {
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.04);
+      color: #dbe1ea;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .process-item {
+      display: grid;
+      grid-template-columns: 56px 1fr;
+      gap: 16px;
+      padding: 16px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .process-item:last-child { border-bottom: 0; }
+
+    .process-index {
+      width: 56px;
+      height: 56px;
+      border-radius: 18px;
+      display: grid;
+      place-items: center;
+      background: var(--gold-soft);
+      border: 1px solid rgba(231,199,150,0.18);
+      color: var(--gold);
+      font-weight: 900;
+    }
+
+    .process-item h4 {
+      margin: 0 0 8px;
+      font-size: 20px;
+      letter-spacing: -0.03em;
+    }
+
+    .cases {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .case-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: start;
+      margin-bottom: 14px;
+    }
+
+    .case-tag {
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: var(--gold-soft);
+      color: var(--gold);
+      border: 1px solid rgba(231,199,150,0.18);
+      font-size: 12px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .case-metric {
+      margin-top: 14px;
+      padding-top: 14px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+      color: #d7dde7;
+      font-size: 14px;
+    }
+
+    .cta {
+      padding: 56px 0 82px;
+    }
+
+    .cta-box {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 18px;
+      align-items: center;
+      background: linear-gradient(135deg, rgba(231,199,150,0.12), rgba(255,255,255,0.05));
+    }
+
+    .cta-box h2 { margin-bottom: 10px; }
+
+    .floating-chip {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      z-index: 30;
+      padding: 14px 18px;
+      border-radius: 999px;
+      background: rgba(10,12,18,0.82);
+      border: 1px solid rgba(231,199,150,0.22);
+      box-shadow: 0 16px 36px rgba(0,0,0,0.35);
+      color: #f3e0be;
+      font-size: 14px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: 0.25s ease;
+      backdrop-filter: blur(14px);
+    }
+
+    .floating-chip:hover { transform: translateY(-3px); }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(36px);
+      transition: opacity 0.85s ease, transform 0.85s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    footer {
+      padding: 0 0 30px;
+      color: var(--muted);
+      font-size: 14px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      flex-wrap: wrap;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding-top: 18px;
+    }
+
+    @media (max-width: 1080px) {
+      .hero-grid,
+      .split,
+      .cta-box,
+      .stats,
+      .grid-3,
+      .cases {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .topbar-inner {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .grid-2 { grid-template-columns: 1fr; }
+      .hero { padding-top: 46px; }
+      h1 { line-height: 1; }
+      .proofline { gap: 10px; }
+      .floating-chip { right: 12px; left: 12px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-orb" id="orb"></div>
+
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <div class="brand">
+        <div class="brand-mark"></div>
+        <div>
+          <div class="brand-title">Рид Татьяна</div>
+          <div class="brand-sub">аккумулированный многолетний управленческий опыт</div>
+        </div>
+      </div>
+
+      <nav class="nav">
+        <a href="#why">Почему это нужно</a>
+        <a href="#control">Что под контролем</a>
+        <a href="#cases">Результаты</a>
+        <a href="#contact" class="btn btn-secondary">Получить разбор</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="reveal">
+          <div class="eyebrow"><span class="eyebrow-dot"></span> Спокойная сила за спиной руководителя</div>
+
+          <h1>Вы управляете бизнесом.<br>Я тихо слежу за тем, чтобы деньги не исчезали.</h1>
+
+          <p class="lead">
+            Это не шумный помощник и не очередная система ради отчётов. Это точный, собранный и всевидящий интеллект, который замечает слабые места в процессах, финансах и прибыли раньше, чем они становятся проблемой для директора.
+          </p>
+
+          <div class="hero-actions">
+            <a href="#contact" class="btn btn-primary">Запросить личный разбор</a>
+            <a href="#control" class="btn btn-secondary">Посмотреть возможности</a>
+          </div>
+
+          <div class="proofline">
+            <span>до 12% скрытых потерь видно в первые 30 дней</span>
+            <span>в 2,7 раза быстрее решения по цифрам</span>
+            <span>контроль без давления на команду</span>
+          </div>
+        </div>
+
+        <aside class="panel hero-card reveal">
+          <div class="monitor">
+            <div class="monitor-top">
+              <div class="monitor-title">Живой обзор для директора</div>
+              <div class="live">Сигналы активны</div>
+            </div>
+
+            <div class="grid-2">
+              <div class="mini-card">
+                <div class="label">Найдено скрытых потерь</div>
+                <div class="num gold" data-count="184">0</div>
+                <div class="small-note">тыс. € за квартал без расширения штата</div>
+              </div>
+
+              <div class="mini-card">
+                <div class="label">Отклонение по марже</div>
+                <div class="num gold" data-count="7.4">0</div>
+                <div class="small-note">% система заметила раньше итогового отчёта</div>
+              </div>
+            </div>
+
+            <div class="chart-box">
+              <div class="label">Динамика чистой прибыли</div>
+              <svg class="chart-svg" viewBox="0 0 520 170" preserveAspectRatio="none">
+                <defs>
+                  <linearGradient id="areaFill" x1="0" x2="0" y1="0" y2="1">
+                    <stop offset="0%" stop-color="rgba(231,199,150,0.38)" />
+                    <stop offset="100%" stop-color="rgba(231,199,150,0.02)" />
+                  </linearGradient>
+                </defs>
+                <path class="chart-area" d="M20,135 C70,128 105,120 145,100 C185,82 210,96 250,84 C300,68 340,54 380,62 C425,72 458,45 500,28 L500,170 L20,170 Z"></path>
+                <path class="chart-path" d="M20,135 C70,128 105,120 145,100 C185,82 210,96 250,84 C300,68 340,54 380,62 C425,72 458,45 500,28"></path>
+                <circle class="chart-dot" cx="20" cy="135" r="4" style="animation-delay:1.0s"></circle>
+                <circle class="chart-dot" cx="145" cy="100" r="4" style="animation-delay:1.2s"></circle>
+                <circle class="chart-dot" cx="250" cy="84" r="4" style="animation-delay:1.4s"></circle>
+                <circle class="chart-dot" cx="380" cy="62" r="4" style="animation-delay:1.6s"></circle>
+                <circle class="chart-dot" cx="500" cy="28" r="5" style="animation-delay:1.8s"></circle>
+              </svg>
+            </div>
+
+            <div class="alerts">
+              <div class="alert" data-detail="Закупки выше допустимого коридора на 9,2%. Система показывает, где цена отклонилась, почему это произошло и какую прибыль это уже съедает.">
+                <div class="alert-index">01</div>
+                <div>
+                  <strong>Закупки вышли за коридор на 9,2%</strong><br>
+                  <span class="small-note">Сигнал до того, как переплата закрепляется как норма.</span>
+                </div>
+              </div>
+
+              <div class="alert" data-detail="Оборотные деньги возвращаются медленнее на 13 дней. Это не только неудобство. Это реальная заморозка денег, которая сужает свободу директора.">
+                <div class="alert-index">02</div>
+                <div>
+                  <strong>Денежный цикл замедлен на 13 дней</strong><br>
+                  <span class="small-note">Замороженные деньги становятся видимыми и управляемыми.</span>
+                </div>
+              </div>
+
+              <div class="alert" data-detail="В одном из блоков бизнеса валовая прибыль просела на 6,1%. Система показывает не общую просадку, а участок, на котором она началась.">
+                <div class="alert-index">03</div>
+                <div>
+                  <strong>Точка просадки прибыли определена</strong><br>
+                  <span class="small-note">Фокус не на симптоме, а на источнике проблемы.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="why">
+      <div class="container">
+        <div class="section-head reveal">
+          <h2>Сильный руководитель не должен держать всё в голове.</h2>
+          <p>Ему нужна система, которая сохраняет ясность, замечает отклонения и помогает принимать спокойные, точные решения без перегруза и ручного контроля всего подряд.</p>
+        </div>
+
+        <div class="stats">
+          <div class="panel stat-card reveal">
+            <div class="label">Скрытая потеря результата</div>
+            <div class="stat-number gold">5–12%</div>
+            <p class="stat-desc">Именно столько бизнес может терять на мелких повторах: лишние расходы, медленные циклы, просадки дисциплины и неверные управленческие акценты.</p>
+          </div>
+
+          <div class="panel stat-card reveal">
+            <div class="label">Скорость реакции</div>
+            <div class="stat-number gold">в 2,7×</div>
+            <p class="stat-desc">Быстрее принимаются решения, когда проблема видна в день появления, а не после закрытия периода.</p>
+          </div>
+
+          <div class="panel stat-card reveal">
+            <div class="label">Освобождение времени</div>
+            <div class="stat-number gold">до 19 ч</div>
+            <p class="stat-desc">В неделю уходит из ручных сверок, уточнений и поисков правды между таблицами, чатами и версиями отчётов.</p>
+          </div>
+
+          <div class="panel stat-card reveal">
+            <div class="label">Единая картина</div>
+            <div class="stat-number gold">1 центр</div>
+            <p class="stat-desc">Одна система обзора вместо разрозненных данных. Меньше шума. Больше точности и управленческой уверенности.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="control">
+      <div class="container">
+        <div class="section-head reveal">
+          <h2>Что этот интеллект берёт под наблюдение</h2>
+          <p>Он не спорит с командой и не давит. Он видит, сравнивает, подсказывает и делает бизнес прозрачнее для того, кто отвечает за результат.</p>
+        </div>
+
+        <div class="grid-3">
+          <article class="panel feature reveal">
+            <div class="feature-id">01</div>
+            <h3>Прибыль</h3>
+            <p>Следит за маржой, доходностью, чистой прибылью и точками просадки по подразделениям и направлениям.</p>
+            <ul>
+              <li>ранние сигналы по отклонениям</li>
+              <li>сравнение план / факт без шума</li>
+              <li>выявление точек потери доходности</li>
+            </ul>
+          </article>
+
+          <article class="panel feature reveal">
+            <div class="feature-id">02</div>
+            <h3>Деньги</h3>
+            <p>Показывает, где зависают оборотные средства, где расход выходит из границ и где приближается кассовое напряжение.</p>
+            <ul>
+              <li>контроль расхода и обязательств</li>
+              <li>видимость денежных циклов</li>
+              <li>карта повторяющихся лишних затрат</li>
+            </ul>
+          </article>
+
+          <article class="panel feature reveal">
+            <div class="feature-id">03</div>
+            <h3>Процессы</h3>
+            <p>Фиксирует слабые места исполнения: срывы сроков, закупочные отклонения, медленные маршруты решений и потерю управленческой дисциплины.</p>
+            <ul>
+              <li>узкие места в цепочке работы</li>
+              <li>контроль точек ответственности</li>
+              <li>видимость системных, а не случайных ошибок</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container split">
+        <div class="panel quote-card reveal">
+          <div>
+            <div class="label">позиционирование</div>
+            <blockquote>Это не контроль ради контроля.<br>Это спокойная уверенность, что бизнес работает так, как должен.</blockquote>
+            <p>Мягкая подача не означает слабость. Наоборот: сила этого решения в том, что оно держит под наблюдением важное и даёт директору ясность без постоянного напряжения.</p>
+          </div>
+
+          <div class="badge-row">
+            <span class="badge">тихий контроль</span>
+            <span class="badge">авторитет цифр</span>
+            <span class="badge">без микроменеджмента</span>
+            <span class="badge">спокойные решения</span>
+          </div>
+        </div>
+
+        <div class="panel process-card reveal">
+          <div class="label">как это работает</div>
+
+          <div class="process-item">
+            <div class="process-index">1</div>
+            <div>
+              <h4>Собирает живую картину бизнеса</h4>
+              <p class="process-text">Ключевые финансовые и управленческие сигналы сводятся в понятный для руководителя обзор.</p>
+            </div>
+          </div>
+
+          <div class="process-item">
+            <div class="process-index">2</div>
+            <div>
+              <h4>Находит отклонения раньше отчёта</h4>
+              <p class="process-text">Система замечает изменения в ритме бизнеса, прежде чем они успеют превратиться в устойчивую проблему.</p>
+            </div>
+          </div>
+
+          <div class="process-item">
+            <div class="process-index">3</div>
+            <div>
+              <h4>Показывает главное без перегруза</h4>
+              <p class="process-text">Не сотни метрик, а только то, что влияет на прибыль, деньги и качество управленческого решения.</p>
+            </div>
+          </div>
+
+          <div class="process-item">
+            <div class="process-index">4</div>
+            <div>
+              <h4>Усиливает спокойствие и результат</h4>
+              <p class="process-text">Директор видит больше, действует точнее и перестаёт тратить внимание на хаотичную ручную проверку всего сразу.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="cases">
+      <div class="container">
+        <div class="section-head reveal">
+          <h2>Как это выглядит в результате</h2>
+          <p>Ниже — демонстрационные примеры подачи. Это не подтверждённые кейсы конкретных компаний, а образ того, как можно показать ценность решения на сайте честно и убедительно.</p>
+        </div>
+
+        <div class="cases">
+          <article class="panel case-card reveal">
+            <div class="case-top">
+              <div>
+                <div class="label">пример подачи</div>
+                <h3>Производственная компания</h3>
+              </div>
+              <div class="case-tag">прибыль и закупки</div>
+            </div>
+
+            <p>После наведения прозрачности в закупках и денежных циклах директор получил ясную карту отклонений и перестал опираться на разрозненные пояснения подразделений.</p>
+
+            <ul class="case-list">
+              <li>обнаружена переплата в закупочном контуре</li>
+              <li>ускорено возвращение оборотных денег</li>
+              <li>снижено число ручных сверок по показателям</li>
+            </ul>
+
+            <div class="case-metric">
+              <span><strong class="gold">-9,2%</strong> лишних закупочных отклонений</span>
+              <span><strong class="gold">+13 дней</strong> к скорости реакции убрано</span>
+            </div>
+          </article>
+
+          <article class="panel case-card reveal">
+            <div class="case-top">
+              <div>
+                <div class="label">пример подачи</div>
+                <h3>Сервисный бизнес</h3>
+              </div>
+              <div class="case-tag">маржа и процессы</div>
+            </div>
+
+            <p>Бизнес рос по выручке, но терял качество маржи внутри. Система показала, какие решения и этапы исполнения размывают прибыль без явного внешнего шума.</p>
+
+            <ul class="case-list">
+              <li>замечена просадка маржи до финального месяца</li>
+              <li>определены слабые участки исполнения</li>
+              <li>приоритизированы действия руководителя</li>
+            </ul>
+
+            <div class="case-metric">
+              <span><strong class="gold">+6,1%</strong> восстановление маржинальности</span>
+              <span><strong class="gold">в 2,3×</strong> быстрее решения</span>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta" id="contact">
+      <div class="container">
+        <div class="panel cta-box reveal">
+          <div>
+            <div class="label">финальный экран</div>
+            <h2>Директору не нужен шум. Ему нужна ясность.</h2>
+            <p>Нажмите кнопку ниже, чтобы перейти на страницу благодарности. Там можно разместить форму, контакты, Telegram, WhatsApp или календарь на встречу.</p>
+          </div>
+
+          <a class="btn btn-primary" href="./thank-you.html">Получить личный разбор</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <button class="floating-chip" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">
+    Запросить личный разбор
+  </button>
+
+  <footer>
+    <div class="container footer-inner">
+      <div>© Рид Татьяна</div>
+      <div>Опыт для контроля прибыли, денег и процессов</div>
+    </div>
+  </footer>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.14 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    function animateValue(el, target) {
+      const isDecimal = String(target).includes('.');
+      const duration = 1800;
+      const start = performance.now();
+
+      function step(now) {
+        const progress = Math.min((now - start) / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        const current = target * eased;
+        el.textContent = isDecimal ? current.toFixed(1) : Math.floor(current);
+        if (progress < 1) requestAnimationFrame(step);
+        else el.textContent = isDecimal ? Number(target).toFixed(1) : Math.floor(target);
+      }
+
+      requestAnimationFrame(step);
+    }
+
+    const counters = document.querySelectorAll('[data-count]');
+    const countObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && !entry.target.dataset.played) {
+          entry.target.dataset.played = '1';
+          animateValue(entry.target, parseFloat(entry.target.dataset.count));
+        }
+      });
+    }, { threshold: 0.6 });
+
+    counters.forEach(counter => countObserver.observe(counter));
+
+    document.querySelectorAll('.alert').forEach(item => {
+      item.addEventListener('click', () => {
+        const detail = item.dataset.detail;
+        const existing = item.querySelector('.alert-detail');
+
+        document.querySelectorAll('.alert-detail').forEach(d => d.remove());
+
+        if (!existing) {
+          const div = document.createElement('div');
+          div.className = 'alert-detail';
+          div.textContent = detail;
+          item.lastElementChild.appendChild(div);
+        }
+      });
+    });
+
+    const orb = document.getElementById('orb');
+    window.addEventListener('mousemove', (e) => {
+      orb.style.transform = `translate(${e.clientX - 260}px, ${e.clientY - 260}px)`;
+    });
+  </script>
+</body>
+</html>
